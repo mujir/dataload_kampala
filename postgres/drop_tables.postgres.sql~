@@ -1,5 +1,3 @@
-DROP TABLE rapidsms_xforms_xformsubmission;
-commit;
 drop table MUJIR_XFORM_SUBMISSIONS;
 commit;
 DROP TABLE db_order_item;
