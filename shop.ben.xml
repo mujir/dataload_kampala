@@ -67,7 +67,17 @@
 	<comment>Importing some more predefined products from a CSV file</comment>
 	<iterate source="products.import.csv" type="db_product" encoding="utf-8" consumer="db" />
 
+	<generate type="rapidsms_backend" count="5" consumer="db">
+		<id name="id" type="long" generator="new IncrementalIdGenerator(1)" />
+		<attribute name="name" type="string" values="'Airtel','Orange','MTN','Aircel','Tata'" unique="true" />
+	</generate>
 
+	<generate type="rapidsms_connection" count="6000" consumer="db">
+		<id name="id" type="long" generator="new IncrementalIdGenerator(1)" />
+		<attribute name="backend_id" source="db" selector="select id from rapidsms_backend" distribution="random"/>
+		<attribute name="identity" type="string" pattern="[1-9][0-9]{2}\-[0-9]{4}\-[0-9]{5}" unique="true" />
+		<!--attribute name="contact_id" values="true,false" /-->
+	</generate>
 
 
 	<generate type="rapidsms_xforms_xformsubmission" count="120" consumer="db">

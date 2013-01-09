@@ -1,3 +1,25 @@
+CREATE TABLE rapidsms_backend
+(
+  id serial NOT NULL,
+  name character varying(20) NOT NULL,
+  CONSTRAINT rapidsms_backend_pkey PRIMARY KEY (id ),
+  CONSTRAINT rapidsms_backend_name_key UNIQUE (name )
+);
+CREATE TABLE rapidsms_connection
+(
+  id serial NOT NULL,
+  backend_id integer NOT NULL,
+  identity character varying(100) NOT NULL,
+  contact_id integer,
+  CONSTRAINT rapidsms_connection_pkey PRIMARY KEY (id ),
+  CONSTRAINT rapidsms_connection_backend_id_fkey FOREIGN KEY (backend_id)
+      REFERENCES rapidsms_backend (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+ -- CONSTRAINT rapidsms_connection_contact_id_fkey FOREIGN KEY (contact_id)
+  --    REFERENCES rapidsms_contact (id) MATCH SIMPLE
+   --   ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  CONSTRAINT rapidsms_connection_backend_id_identity_key UNIQUE (backend_id , identity )
+);
 CREATE TABLE rapidsms_xforms_xformsubmission
 (
   id serial NOT NULL,
@@ -11,6 +33,10 @@ CREATE TABLE rapidsms_xforms_xformsubmission
   message_id integer,
   approved boolean, -- NOT NULL,
   CONSTRAINT rapidsms_xforms_xformsubmission_pkey PRIMARY KEY (id )
+--  CONSTRAINT connection_id_refs_id_513b0e17421f5b43 FOREIGN KEY (connection_id)
+  --    REFERENCES rapidsms_connection (id) MATCH SIMPLE
+    --  ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED
+
 );
 CREATE TABLE MUJIR_XFORM_SUBMISSIONS (
   id     varchar(13)  NOT NULL,

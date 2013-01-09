@@ -1,3 +1,7 @@
+drop table rapidsms_backend;
+commit;
+drop table rapidsms_connection;
+commit;
 DROP TABLE rapidsms_xforms_xformsubmission;
 commit;
 drop table MUJIR_XFORM_SUBMISSIONS;
