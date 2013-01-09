@@ -11,10 +11,10 @@ CREATE TABLE rapidsms_contact
   village_name character varying(100),
   role_id integer,
   supply_point_id integer,
-  --needs_reminders boolean NOT NULL,
-  --is_active boolean NOT NULL,
-  --is_approved boolean NOT NULL,
-  --active boolean NOT NULL,
+  needs_reminders boolean NOT NULL,
+  is_active boolean NOT NULL,
+  is_approved boolean NOT NULL,
+  active boolean NOT NULL,
   CONSTRAINT rapidsms_contact_pkey PRIMARY KEY (id )--,
   --CONSTRAINT reporting_location_id_refs_id_8c3a8f57 FOREIGN KEY (reporting_location_id)
    --   REFERENCES locations_location (id) MATCH SIMPLE
@@ -44,34 +44,28 @@ CREATE TABLE rapidsms_connection
   CONSTRAINT rapidsms_connection_backend_id_fkey FOREIGN KEY (backend_id)
       REFERENCES rapidsms_backend (id) MATCH SIMPLE
       ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
- -- CONSTRAINT rapidsms_connection_contact_id_fkey FOREIGN KEY (contact_id)
-  --    REFERENCES rapidsms_contact (id) MATCH SIMPLE
-   --   ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  CONSTRAINT rapidsms_connection_contact_id_fkey FOREIGN KEY (contact_id)
+      REFERENCES rapidsms_contact (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
   CONSTRAINT rapidsms_connection_backend_id_identity_key UNIQUE (backend_id , identity )
 );
 CREATE TABLE rapidsms_xforms_xformsubmission
 (
   id serial NOT NULL,
   xform_id integer NOT NULL,
-  type character varying(8) ,--NOT NULL,
+  type character varying(8) NOT NULL,
   connection_id integer,
   "raw" text NOT NULL,
   has_errors boolean NOT NULL,
-  created timestamp with time zone , --NOT NULL,
-  confirmation_id integer, -- NOT NULL,
+  created timestamp with time zone,-- NOT NULL,
+  confirmation_id integer NOT NULL,
   message_id integer,
-  approved boolean, -- NOT NULL,
-  CONSTRAINT rapidsms_xforms_xformsubmission_pkey PRIMARY KEY (id )
---  CONSTRAINT connection_id_refs_id_513b0e17421f5b43 FOREIGN KEY (connection_id)
-  --    REFERENCES rapidsms_connection (id) MATCH SIMPLE
-    --  ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED
+  approved boolean NOT NULL,
+  CONSTRAINT rapidsms_xforms_xformsubmission_pkey PRIMARY KEY (id ),
+  CONSTRAINT connection_id_refs_id_513b0e17421f5b43 FOREIGN KEY (connection_id)
+      REFERENCES rapidsms_connection (id) MATCH SIMPLE
+      ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED
 
-);
-CREATE TABLE MUJIR_XFORM_SUBMISSIONS (
-  id     varchar(13)  NOT NULL,
-  mssgId  int NOT NULL,
-  mssg         varchar(600)  NOT NULL,
-  PRIMARY KEY (id)
 );
 CREATE SEQUENCE seq_id_gen START WITH 10;
 --
