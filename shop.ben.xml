@@ -59,7 +59,7 @@
 	<execute uri="{ftl:${database}/drop_tables.${database}.sql}"   target="db" onError="ignore" />
 	<execute uri="{ftl:${database}/create_tables.${database}.sql}" target="db" />
 	
-	<bean id="idGen" spec="new IncrementGenerator(1000)" />
+	<bean id="idGen" spec="new IncrementGenerator(1)" />
 
 	<comment>Creating a valid base data set for regression testing by importing a DbUnit file</comment>
 	<iterate source="shop.dbunit.xml" consumer="db" />
@@ -68,20 +68,22 @@
 	<iterate source="products.import.csv" type="db_product" encoding="utf-8" consumer="db" />
 
 
+
+
 	<generate type="rapidsms_xforms_xformsubmission" count="120" consumer="db">
-		<id name="id" type="long" generator="new IncrementalIdGenerator(1)" />
+		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="74" />
 		<attribute name="raw" type="string" pattern="RECV\.1000\.subcounty[0-2]{4}" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="600" consumer="db">
-		<id name="id" type="long" generator="new IncrementalIdGenerator(125)" />
+		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="73" />
 		<attribute name="raw" type="string" pattern="SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="600" consumer="db">
-		<id name="id" type="long" generator="new IncrementalIdGenerator(730)" />
+		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="75" />
 		<attribute name="raw" type="string" pattern="DIST\.230\.distributioncentre[0-2]{4}[1-9]|DIST\.250\.distributioncentre[0-2]{4}[1-9]|DIST\.240\.distributioncentre[0-2]{4}[1-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
@@ -89,19 +91,19 @@
 
 
 	<generate type="rapidsms_xforms_xformsubmission" count="120" consumer="db">
-		<id name="id" type="long" generator="new IncrementalIdGenerator(1500)" />
+		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="74" />
 		<attribute name="raw" type="string" pattern="RECV\.1000\.subcounty[0-2]{4}" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="600" consumer="db">
-		<id name="id" type="long" generator="new IncrementalIdGenerator(1710)" />
+		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="73" />
 		<attribute name="raw" type="string" pattern="SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="600" consumer="db">
-		<id name="id" type="long" generator="new IncrementalIdGenerator(2420)" />
+		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="75" />
 		<attribute name="raw" type="string" pattern="DIST\.230\.distributioncentre[0-2]{4}[1-9]|DIST\.250\.distributioncentre[0-2]{4}[1-9]|DIST\.240\.distributioncentre[0-2]{4}[1-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
@@ -109,19 +111,19 @@
 
 
 	<generate type="rapidsms_xforms_xformsubmission" count="120" consumer="db">
-		<id name="id" type="long" generator="new IncrementalIdGenerator(3100)" />
+		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="74" />
 		<attribute name="raw" type="string" pattern="RECV\.1000\.subcounty[0-2]{4}" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="600" consumer="db">
-		<id name="id" type="long" generator="new IncrementalIdGenerator(3300)" />
+		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="73" />
 		<attribute name="raw" type="string" pattern="SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="600" consumer="db">
-		<id name="id" type="long" generator="new IncrementalIdGenerator(4220)" />
+		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="75" />
 		<attribute name="raw" type="string" pattern="DIST\.230\.distributioncentre[0-2]{4}[1-9]|DIST\.250\.distributioncentre[0-2]{4}[1-9]|DIST\.240\.distributioncentre[0-2]{4}[1-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
