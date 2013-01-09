@@ -1,3 +1,32 @@
+CREATE TABLE rapidsms_contact
+(
+  id serial NOT NULL,
+  name character varying(100) NOT NULL,
+  language character varying(6) NOT NULL,
+  user_id integer,
+  reporting_location_id integer,
+  birthdate timestamp with time zone,
+  gender character varying(1),
+  village_id integer,
+  village_name character varying(100),
+  role_id integer,
+  supply_point_id integer,
+  --needs_reminders boolean NOT NULL,
+  --is_active boolean NOT NULL,
+  --is_approved boolean NOT NULL,
+  --active boolean NOT NULL,
+  CONSTRAINT rapidsms_contact_pkey PRIMARY KEY (id )--,
+  --CONSTRAINT reporting_location_id_refs_id_8c3a8f57 FOREIGN KEY (reporting_location_id)
+   --   REFERENCES locations_location (id) MATCH SIMPLE
+  --    ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  --CONSTRAINT user_id_refs_id_c38d4eb8 FOREIGN KEY (user_id)
+    --  REFERENCES auth_user (id) MATCH SIMPLE
+      --ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+ -- CONSTRAINT village_id_refs_id_8c3a8f57 FOREIGN KEY (village_id)
+   --   REFERENCES locations_location (id) MATCH SIMPLE
+     -- ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED,
+  -- CONSTRAINT rapidsms_contact_user_id_key UNIQUE (user_id )
+);
 CREATE TABLE rapidsms_backend
 (
   id serial NOT NULL,
@@ -37,12 +66,6 @@ CREATE TABLE rapidsms_xforms_xformsubmission
   --    REFERENCES rapidsms_connection (id) MATCH SIMPLE
     --  ON UPDATE NO ACTION ON DELETE NO ACTION DEFERRABLE INITIALLY DEFERRED
 
-);
-CREATE TABLE MUJIR_XFORM_SUBMISSIONS (
-  id     varchar(13)  NOT NULL,
-  mssgId  int NOT NULL,
-  mssg         varchar(600)  NOT NULL,
-  PRIMARY KEY (id)
 );
 CREATE SEQUENCE seq_id_gen START WITH 10;
 --

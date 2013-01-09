@@ -72,6 +72,12 @@
 		<attribute name="name" type="string" values="'Airtel','Orange','MTN','Aircel','Tata'" unique="true" />
 	</generate>
 
+	<generate type="rapidsms_contact" count="6000" consumer="db">
+		<id name="id" type="long" generator="new IncrementalIdGenerator(1)" />
+<variable name="person" generator="PersonGenerator"/>
+		<attribute name="name" source="person.givenName" />
+		<attribute name="language" values="'En'"/>
+	</generate>
 	<generate type="rapidsms_connection" count="6000" consumer="db">
 		<id name="id" type="long" generator="new IncrementalIdGenerator(1)" />
 		<attribute name="backend_id" source="db" selector="select id from rapidsms_backend" distribution="random"/>
