@@ -1,0 +1,67 @@
+2013-01-09 04:45:59,171 INFO  (main) [org.databene.CONFIG] Running file shop.ben.xml
+2013-01-09 04:45:59,172 INFO  (main) [org.databene.CONFIG] Benerator 0.7.10 build 2234
+2013-01-09 04:45:59,173 INFO  (main) [org.databene.CONFIG] Java version 1.7.0_09
+2013-01-09 04:45:59,173 INFO  (main) [org.databene.CONFIG] JVM OpenJDK 64-Bit Server VM 23.2-b09 (Oracle Corporation)
+2013-01-09 04:45:59,173 INFO  (main) [org.databene.CONFIG] OS Linux 3.2.0-35-generic (amd64)
+2013-01-09 04:45:59,173 INFO  (main) [org.databene.CONFIG] Installed JSR 223 Script Engines:
+2013-01-09 04:45:59,215 INFO  (main) [org.databene.CONFIG] - Rhino[js, rhino, JavaScript, javascript, ECMAScript, ecmascript]
+2013-01-09 04:45:59,216 INFO  (main) [org.databene.CONFIG] Max heap size: 955 MB
+2013-01-09 04:45:59,252 DEBUG (main) [org.databene.CONFIG] Initializing Script mapping from file org/databene/script/script.properties
+2013-01-09 04:45:59,610 DEBUG (main) [org.databene.COMMENT] - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
+		 !   Demonstration file for populating the shop database.    !
+		 !                                                           !
+		 !   You can choose a database and a stage like this:        !
+		 !       -Dstage=development -Ddatabase=oracle               !
+		 !                                                           !
+		 !   These database types are provided:                      !
+		 !       oracle, db2, sql_server, mysql, postgres, hsql,     !
+		 !       hsqlmem, firebird, derby, h2                        !
+		 !                                                           !
+		 !   ...and these stage configurations:                      !
+		 !       development, perftest                               !
+		 !                                                           !
+		 !   Set up your database connection in the file             !
+		 !       <database>/shop.<database>.properties   !
+		 !                                                           !
+		 !   You may want to try different generation quantities in  !
+		 !       shop.<stage>.properties                       !
+		 - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
+2013-01-09 04:45:59,612 DEBUG (main) [org.databene.COMMENT] setting default values
+2013-01-09 04:45:59,612 DEBUG (main) [org.databene.COMMENT] import stage and database specific properties
+2013-01-09 04:45:59,737 DEBUG (main) [org.databene.COMMENT] log the settings to the console
+2013-01-09 04:45:59,742 DEBUG (main) [org.databene.COMMENT] define a database that will be referred by the id 'db' subsequently
+2013-01-09 04:45:59,759 DEBUG (main) [org.databene.COMMENT] drop the current tables/sequences if they exist and recreate them
+2013-01-09 04:45:59,772 INFO  (main) [org.databene.benerator.engine.statement.EvaluateStatement] Executing script postgres/drop_tables.postgres.sql
+2013-01-09 04:45:59,909 INFO  (main) [org.databene.JDBC] Connected to PostgreSQL 9.1.7
+2013-01-09 04:45:59,909 INFO  (main) [org.databene.JDBC] Using driver PostgreSQL Native Driver PostgreSQL 8.4 JDBC4 (build 701)
+2013-01-09 04:45:59,909 INFO  (main) [org.databene.JDBC] JDBC version 4.0
+2013-01-09 04:45:59,999 INFO  (main) [org.databene.benerator.engine.statement.EvaluateStatement] Executing script postgres/create_tables.postgres.sql
+2013-01-09 04:46:00,079 DEBUG (main) [org.databene.COMMENT] Creating a valid base data set for regression testing by importing a DbUnit file
+2013-01-09 04:46:00,228 INFO  (main) [org.databene.task.runner.PagedTaskRunner] Running task GenerateAndConsumeTask(shop.dbunit.xml) 
+2013-01-09 04:46:00,306 INFO  (main) [org.databene.jdbacl.model.jdbc.JDBCDBImporter] Importing tables from ___temp
+2013-01-09 04:46:00,326 INFO  (main) [org.databene.platform.db.DBSystem] Fetching table details and ordering tables by dependency
+2013-01-09 04:46:00,737 INFO  (main) [org.databene.benerator.engine.statement.TimedGeneratorStatement] Created 41 data sets from 'anonymous' setup in 575 ms (71/s)
+2013-01-09 04:46:00,737 DEBUG (main) [org.databene.COMMENT] Importing some more predefined products from a CSV file
+2013-01-09 04:46:00,744 INFO  (main) [org.databene.task.runner.PagedTaskRunner] Running task GenerateAndConsumeTask(db_product) 
+2013-01-09 04:46:00,803 INFO  (main) [org.databene.benerator.engine.statement.TimedGeneratorStatement] Created 4 data sets from 'db_product' setup in 66 ms (60/s)
+2013-01-09 04:46:00,803 DEBUG (main) [org.databene.COMMENT] You could import them from a fixed column width file as well, e.g.
+		iterate name="db_product" source="products.import.fcw" 
+			pattern="ean_code[13],name[30],category_id[9],price[8r0],manufacturer[30]" consumer="db" /
+2013-01-09 04:46:00,809 DEBUG (main) [org.databene.COMMENT] Creating products of random attributes and category and exporting them to 
+		the database as well as to a fixed column width file
+2013-01-09 04:46:01,024 INFO  (main) [org.databene.task.runner.PagedTaskRunner] Running task GenerateAndConsumeTask(db_product) 50 times with page size 1 in a single thread
+2013-01-09 04:46:01,295 INFO  (main) [org.databene.benerator.engine.statement.TimedGeneratorStatement] Created 50 data sets from 'db_product' setup in 485 ms (103/s)
+2013-01-09 04:46:01,295 DEBUG (main) [org.databene.COMMENT] create customers
+2013-01-09 04:46:02,180 INFO  (main) [org.databene.task.runner.PagedTaskRunner] Running task GenerateAndConsumeTask(db_user) 100 times with page size 1 in a single thread
+2013-01-09 04:46:02,938 INFO  (main) [org.databene.benerator.engine.statement.TimedGeneratorStatement] Created 200 data sets from 'db_user' setup in 1643 ms (121/s)
+2013-01-09 04:46:02,938 DEBUG (main) [org.databene.COMMENT] create orders for random customers and random products
+2013-01-09 04:46:02,956 INFO  (main) [org.databene.task.runner.PagedTaskRunner] Running task GenerateAndConsumeTask(db_order) 300 times with page size 1 in a single thread
+2013-01-09 04:46:03,555 INFO  (main) [org.databene.benerator.engine.statement.TimedGeneratorStatement] Created 300 data sets from 'db_order' setup in 617 ms (486/s)
+2013-01-09 04:46:03,555 DEBUG (main) [org.databene.COMMENT] create order items
+2013-01-09 04:46:03,591 INFO  (main) [org.databene.task.runner.PagedTaskRunner] Running task GenerateAndConsumeTask(db_order_item) 1500 times with page size 1 in a single thread
+2013-01-09 04:46:06,724 INFO  (main) [org.databene.benerator.engine.statement.TimedGeneratorStatement] Created 1500 data sets from 'db_order_item' setup in 3169 ms (473/s)
+2013-01-09 04:46:06,725 DEBUG (main) [org.databene.COMMENT] Update order data, calculating the total sum of each order
+2013-01-09 04:46:06,728 INFO  (main) [org.databene.task.runner.PagedTaskRunner] Running task GenerateAndConsumeTask(db_order) 
+2013-01-09 04:46:07,561 INFO  (main) [org.databene.benerator.engine.statement.TimedGeneratorStatement] Created 301 data sets from 'db_order' setup in 836 ms (360/s)
+2013-01-09 04:46:07,564 INFO  (main) [org.databene.jdbacl.model.cache.CachingDBImporter] Exporting Database meta data of ___temp to cache file
+2013-01-09 04:46:07,637 INFO  (main) [org.databene.benerator.engine.DescriptorRunner] Created a total of 2396 entities in 8 s (~1,000,000 p.h.)

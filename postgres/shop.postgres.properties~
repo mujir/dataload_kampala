@@ -1,0 +1,7 @@
+dbUrl=jdbc:postgresql://localhost:5432/dataload	
+dbDriver=org.postgresql.Driver
+dbSchema=public
+dbUser=mtrack
+dbPassword=mtrack
+idStrategy=seqhilo
+idParam=seq_id_gen
