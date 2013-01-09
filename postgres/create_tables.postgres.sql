@@ -2,15 +2,15 @@ CREATE TABLE rapidsms_xforms_xformsubmission
 (
   id serial NOT NULL,
   xform_id integer NOT NULL,
-  type character varying(8) NOT NULL,
+  type character varying(8) ,--NOT NULL,
   connection_id integer,
   "raw" text NOT NULL,
   has_errors boolean NOT NULL,
-  created timestamp with time zone NOT NULL,
-  confirmation_id integer NOT NULL,
+  created timestamp with time zone , --NOT NULL,
+  confirmation_id integer, -- NOT NULL,
   message_id integer,
-  approved boolean NOT NULL,
-  CONSTRAINT rapidsms_xforms_xformsubmission_pkey PRIMARY KEY (id ),
+  approved boolean, -- NOT NULL,
+  CONSTRAINT rapidsms_xforms_xformsubmission_pkey PRIMARY KEY (id )
 );
 CREATE TABLE MUJIR_XFORM_SUBMISSIONS (
   id     varchar(13)  NOT NULL,
