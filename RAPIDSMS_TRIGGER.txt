@@ -16,20 +16,24 @@ $BODY$
 		
 		SELECT raw, xform_id INTO rawMessage, xformId FROM rapidsms_xforms_xformsubmission WHERE id = NEW.id;
 
-		select regexp_split_to_table(rawMessage, E'\\,') into mssgType limit 1;
-		if (mssgType =='RECV')
-			select regexp_split_to_array(rawMessage, E'\\,') into mssgPart;
-			insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, mssgPart[1], now(), now(), 425);
-			insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, mssgPart[2], now(), now(), 426);	
-		end-if
+		select regexp_split_to_table(rawMessage, E'\\.') into mssgType limit 1;
 
-
-		for eavValue in (select regexp_split_to_table(rawMessage, E'\\.'))   loop
-			
-			if (eavValue!='RECV' || eavValue != 'SEND' || eavValue != 'DIST')
-				insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, eavValue, now(), now(), 427);
-			end if
-		end loop;
+		if mssgType = 'RECV' then
+			select regexp_split_to_array(rawMessage, E'\\.') into mssgPart;
+			insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, mssgPart[2], now(), now(), 425);
+			insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, mssgPart[3], now(), now(), 426);	
+		end if;
+		if mssgType = 'SEND' then
+			select regexp_split_to_array(rawMessage, E'\\.') into mssgPart;
+			insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, mssgPart[2], now(), now(), 422);
+			insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, mssgPart[3], now(), now(), 423);	
+			insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, mssgPart[4], now(), now(), 424);	
+		end if;
+		if mssgType = 'DIST' then
+			select regexp_split_to_array(rawMessage, E'\\.') into mssgPart;
+			insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, mssgPart[2], now(), now(), 427);
+			insert into eav_value (entity_ct_id, entity_id, value_text, created, modified, attribute_id) values(37, 1, mssgPart[3], now(), now(), 428);	
+		end if;
 
 	  RETURN NULL;
 	END;
