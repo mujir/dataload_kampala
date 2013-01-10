@@ -55,17 +55,17 @@
     <database id="db" url="{dbUrl}" driver="{dbDriver}" catalog="{dbCatalog}" schema="{dbSchema}"
         user="{dbUser}" password="{dbPassword}" batch="{dbBatch}" />
 
-	<!-- MUJIR - DO NOT NEED TO CREATE/DELETE ON ACTUAL SCHEMA -->
+	<!-- MUJIR - DO NOT NEED TO CREATE/DELETE ON ACTUAL SCHEMA >
 	<comment>drop the current tables/sequences if they exist and recreate them</comment>
 	<execute uri="{ftl:${database}/drop_tables.${database}.sql}"   target="db" onError="ignore" />
-	<execute uri="{ftl:${database}/create_tables.${database}.sql}" target="db" />
+	<execute uri="{ftl:${database}/create_tables.${database}.sql}" target="db" /-->
 
 
-	<comment>Creating a valid base data set for regression testing by importing a DbUnit file</comment>
+	<!--comment>Creating a valid base data set for regression testing by importing a DbUnit file</comment>
 	<iterate source="shop.dbunit.xml" consumer="db" />
 
 	<comment>Importing some more predefined products from a CSV file</comment>
-	<iterate source="products.import.csv" type="db_product" encoding="utf-8" consumer="db" />
+	<iterate source="products.import.csv" type="db_product" encoding="utf-8" consumer="db" /-->
 
 	<generate type="rapidsms_backend" count="5" consumer="db">
 		<id name="id" type="long" generator="new IncrementalIdGenerator(1)" />
