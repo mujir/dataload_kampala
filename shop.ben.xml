@@ -86,38 +86,88 @@
 		<id name="id" type="long" generator="new IncrementalIdGenerator(7000)" />
 		<attribute name="backend_id" source="db" selector="select id from rapidsms_backend" distribution="random"/>
 		<attribute name="identity" type="string" pattern="[1-9][0-9]{2}\-[0-9]{4}\-[0-9]{5}" unique="true" />
-		<attribute name="contact_id" source="select id from contact" distribution="random" />
+		<attribute name="contact_id" source="select id from rapidsms_contact" distribution="random" />
 	</generate>
 
 	<bean id="idGen" spec="new IncrementGenerator(1000)" />
+	<bean id="confirmationIdGen" spec="new IncrementGenerator(1)" />
 	<generate type="rapidsms_xforms_xformsubmission" count="400" consumer="db">
 		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="74" />
-		<attribute name="raw" type="string" pattern="RECV\.1000\.subcounty[0-2]{4}" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="raw" type="string" pattern="recv\.1000\.subcounty[0-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 		<attribute name="approved" type="boolean" values="true,false" />
-		<attribute name="confirmation_id" values="1" />
-		<attribute name="type" values="'type1'" />
+		<attribute name="confirmation_id" generator="confirmationIdGen" />
+		<attribute name="type" values="'sms'" />
 		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="20000" consumer="db">
 		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="73" />
-		<attribute name="raw" type="string" pattern="SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="raw" type="string" pattern="send\.250\.subcounty[0-9]\.distributioncentre[0-9]|send\.250\.subcounty[0-9]\.distributioncentre[0-9]|send\.250\.subcounty[0-9]\.distributioncentre[0-9]|send\.250\.subcounty[0-9]\.distributioncentre[0-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 		<attribute name="approved" type="boolean" values="true,false" />
-		<attribute name="confirmation_id" values="1" />
-		<attribute name="type" values="'type1'" />
+		<attribute name="confirmation_id" generator="confirmationIdGen"/>
+		<attribute name="type" values="'sms'" />
 		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="20000" consumer="db">
 		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="75" />
-		<attribute name="raw" type="string" pattern="DIST\.230\.distributioncentre[0-2]{4}[1-9]|DIST\.250\.distributioncentre[0-2]{4}[1-9]|DIST\.240\.distributioncentre[0-2]{4}[1-9]" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="raw" type="string" pattern="recv\.230\.distributioncentre[0-9]|recv\.250\.distributioncentre[0-9]|recv\.240\.distributioncentre[0-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 		<attribute name="approved" type="boolean" values="true,false" />
-		<attribute name="confirmation_id" values="1" />
-		<attribute name="type" values="'type1'" />
+		<attribute name="confirmation_id" generator="confirmationIdGen" />
+		<attribute name="type" values="'sms'" />
+		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
+	</generate>
+	<generate type="rapidsms_xforms_xformsubmission" count="20000" consumer="db">
+		<id name="id" type="long" generator="idGen" />
+		<attribute name="xform_id" values="75" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="raw" type="string" pattern="dist\.230\.distributioncentre[0-9]|dist\.250\.distributioncentre[0-9]|dist\.240\.distributioncentre[0-9]" />
+		<attribute name="has_errors" type="boolean" values="true,false" />
+		<attribute name="approved" type="boolean" values="true,false" />
+		<attribute name="confirmation_id" generator="confirmationIdGen" />
+		<attribute name="type" values="'sms'" />
+		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
+	</generate>
+
+
+	<!--generate type="rapidsms_xforms_xformsubmission" count="400" consumer="db">
+		<id name="id" type="long" generator="idGen" />
+		<attribute name="xform_id" values="74" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="raw" type="string" pattern="recv\.1000\.subcounty[0-2]{4}" />
+		<attribute name="has_errors" type="boolean" values="true,false" />
+		<attribute name="approved" type="boolean" values="true,false" />
+		<attribute name="confirmation_id" generator="confirmationIdGen" />
+		<attribute name="type" values="'sms'" />
+		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
+	</generate>
+	<generate type="rapidsms_xforms_xformsubmission" count="20000" consumer="db">
+		<id name="id" type="long" generator="idGen" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="xform_id" values="73" />
+		<attribute name="raw" type="string" pattern="send\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]" />
+		<attribute name="has_errors" type="boolean" values="true,false" />
+		<attribute name="approved" type="boolean" values="true,false" />
+		<attribute name="confirmation_id" generator="confirmationIdGen" />	
+		<attribute name="type" values="'sms'" />	
+		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
+	</generate>
+	<generate type="rapidsms_xforms_xformsubmission" count="20000" consumer="db">
+		<id name="id" type="long" generator="idGen" />
+		<attribute name="xform_id" values="75" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="raw" type="string" pattern="dist\.230\.distributioncentre[0-2]{4}[1-9]|DIST\.250\.distributioncentre[0-2]{4}[1-9]|DIST\.240\.distributioncentre[0-2]{4}[1-9]" />
+		<attribute name="has_errors" type="boolean" values="true,false" />
+		<attribute name="approved" type="boolean" values="true,false" />
+		<attribute name="confirmation_id" generator="confirmationIdGen" />
+		<attribute name="type" values="'sms'" />
 		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
 	</generate>
 
@@ -125,66 +175,37 @@
 	<generate type="rapidsms_xforms_xformsubmission" count="400" consumer="db">
 		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="74" />
-		<attribute name="raw" type="string" pattern="RECV\.1000\.subcounty[0-2]{4}" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="raw" type="string" pattern="recv\.1000\.subcounty[0-2]{4}" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 		<attribute name="approved" type="boolean" values="true,false" />
-		<attribute name="confirmation_id" values="1" />
-		<attribute name="type" values="'type1'" />
+		<attribute name="confirmation_id" generator="confirmationIdGen" />
+		<attribute name="type" values="'sms'" />
 		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="20000" consumer="db">
 		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="73" />
-		<attribute name="raw" type="string" pattern="SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="raw" type="string" pattern="send\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 		<attribute name="approved" type="boolean" values="true,false" />
-		<attribute name="confirmation_id" values="1" />	
-		<attribute name="type" values="'type1'" />	
+		<attribute name="confirmation_id" generator="confirmationIdGen" />
+		<attribute name="type" values="'sms'" />
 		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
 	</generate>
 	<generate type="rapidsms_xforms_xformsubmission" count="20000" consumer="db">
 		<id name="id" type="long" generator="idGen" />
 		<attribute name="xform_id" values="75" />
-		<attribute name="raw" type="string" pattern="DIST\.230\.distributioncentre[0-2]{4}[1-9]|DIST\.250\.distributioncentre[0-2]{4}[1-9]|DIST\.240\.distributioncentre[0-2]{4}[1-9]" />
+		<attribute name="connection_id" source="db" selector="select id from rapidsms_connection" distribution="random" />
+		<attribute name="raw" type="string" pattern="dist\.230\.distributioncentre[0-2]{4}[1-9]|DIST\.250\.distributioncentre[0-2]{4}[1-9]|DIST\.240\.distributioncentre[0-2]{4}[1-9]" />
 		<attribute name="has_errors" type="boolean" values="true,false" />
 		<attribute name="approved" type="boolean" values="true,false" />
-		<attribute name="confirmation_id" values="1" />
-		<attribute name="type" values="'type1'" />
-		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
-	</generate>
-
-
-	<generate type="rapidsms_xforms_xformsubmission" count="400" consumer="db">
-		<id name="id" type="long" generator="idGen" />
-		<attribute name="xform_id" values="74" />
-		<attribute name="raw" type="string" pattern="RECV\.1000\.subcounty[0-2]{4}" />
-		<attribute name="has_errors" type="boolean" values="true,false" />
-		<attribute name="approved" type="boolean" values="true,false" />
-		<attribute name="confirmation_id" values="1" />
-		<attribute name="type" values="'type1'" />
-		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
-	</generate>
-	<generate type="rapidsms_xforms_xformsubmission" count="20000" consumer="db">
-		<id name="id" type="long" generator="idGen" />
-		<attribute name="xform_id" values="73" />
-		<attribute name="raw" type="string" pattern="SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]|SEND\.250\.subcounty[0-2]{4}\.distributioncentre[0-2]{4}[1-9]" />
-		<attribute name="has_errors" type="boolean" values="true,false" />
-		<attribute name="approved" type="boolean" values="true,false" />
-		<attribute name="confirmation_id" values="1" />
-		<attribute name="type" values="'type1'" />
-		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>
-	</generate>
-	<generate type="rapidsms_xforms_xformsubmission" count="20000" consumer="db">
-		<id name="id" type="long" generator="idGen" />
-		<attribute name="xform_id" values="75" />
-		<attribute name="raw" type="string" pattern="DIST\.230\.distributioncentre[0-2]{4}[1-9]|DIST\.250\.distributioncentre[0-2]{4}[1-9]|DIST\.240\.distributioncentre[0-2]{4}[1-9]" />
-		<attribute name="has_errors" type="boolean" values="true,false" />
-		<attribute name="approved" type="boolean" values="true,false" />
-		<attribute name="confirmation_id" values="1" />
-		<attribute name="type" values="'type1'" />
+		<attribute name="confirmation_id" generator="confirmationIdGen" />
+		<attribute name="type" values="'sms'" />
 		<attribute name="created" generator="org.databene.benerator.primitive.datetime.CurrentDateGenerator"/>git
 
-	</generate>
+	</generate-->
   	
 
 </setup>
