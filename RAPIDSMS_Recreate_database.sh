@@ -4,7 +4,7 @@ start_Time=`date +%s`
 
 sudo -u postgres dropdb mtrack
 sudo -u postgres createdb mtrack
-~/code/mtrack/mtrack_project/manage.py syncdb
+~/code/mtrack/mtrack_project/manage.py syncdb --noinput
 ~/code/mtrack/mtrack_project/manage.py migrate
 ~/code/mtrack/mtrack_project/manage.py loaddata healthmodels locations
 
