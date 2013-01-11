@@ -16,8 +16,9 @@ sudo -u postgres createdb mtrack
 ##sudo -u postgres psql mtrack -c "ALTER TABLE rapidsms_contact  drop CONSTRAINT rapidsms_contact_user_id_key"
 
 sudo -u postgres psql mtrack -f "RAPIDSMS_TRIGGER.sql"
+sudo -u postgres psql mtrack -f "RAPIDSMS_CREATE_REPORT_TABLE_AND_TRIGGER.sql"
 
-benerator.sh shop.ben.xml
+benerator.sh RAPIDSMS_data_load.xml
 
 end_Time=`date +%s`
 execution_time=`expr $((end_Time - start_Time))`
